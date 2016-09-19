@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<launch>
+    <master auto="start"/>
+
+    <arg name="fcu_url" default="/dev/ttyACM0:921600" />
+    <arg name="gcs_url" default="" />
+    <arg name="tgt_system" default="1" />
+    <arg name="tgt_component" default="1" />
+    <arg name="log_output" default="screen" />
+
+    <include file="$(find mavros)/launch/node.launch">
+            <arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
+            <arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
+
+            <arg name="fcu_url" value="$(arg fcu_url)" />
+            <arg name="gcs_url" value="$(arg gcs_url)" />
+            <arg name="tgt_system" value="$(arg tgt_system)" />
+            <arg name="tgt_component" value="$(arg tgt_component)" />
+            <arg name="log_output" value="$(arg log_output)" />
+    </include>
+
+    <node pkg="opencv_test" type="px4_imu_publisher"   name="px4_imu_publisher">
+        <rosparam>
+            frame_imu:          "/imu"
+            topic_input_imu:    "/mavros/imu/data"
+            topic_output:       "/imu_output"
+        </rosparam>
+    </node>
+
+<!--
+    <node pkg="rviz" type="rviz" name="rviz" respawn="true"
+        args="  -d $(find opencv_test)/rviz_cfg/rviz_cfg.rviz"/>
+    <node pkg="rqt_plot" type="rqt_plot" name="postion_plot"
+        args="  /pose_chassis/euler/origin/x
+                /pose_chassis/euler/origin/y
+                /pose_chassis/euler/origin/z"/>
+    <node pkg="rqt_plot" type="rqt_plot" name="rotation_plot"
+        args="  /pose_chassis/euler/rotation/x
+                /pose_chassis/euler/rotation/y
+                /pose_chassis/euler/rotation/z"/>
+-->
+</launch>

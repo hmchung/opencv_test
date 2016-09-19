@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+    <param name="/scan/rations/count" type="int" value="3" />
+    <param name="/scan/rations/0" type="int" value="1" />
+    <param name="/scan/rations/1" type="int" value="4" />
+    <param name="/scan/rations/2" type="int" value="1" />
+
+    <master auto="start"/>
+    <!-- <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/> -->
+    <node pkg="opencv_test" type="scan_extraction" name="scan_extraction" output="screen"/>
+
+</launch>
